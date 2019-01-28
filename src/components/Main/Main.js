@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 import Button from '../Button';
 import InputText from '../InputText';
@@ -50,7 +51,46 @@ const StyledForm = styled.form`
 `;
 
 class Main extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  componentWillMount() {
+    const { fetchSkills } = this.props;
+    fetchSkills();
+  }
+
+  fetchStatus(fetchStatus) {
+    return fetchStatus === 'LOADING' || fetchStatus === 'NOT_LOADED';
+  }
+
+  renderSkillItems() {
+    const { skills = [] } = this.props;
+    return skills.map((skill, index) => (
+      <Skill
+        key={`skill-${skill && skill.id}`}
+        index={index + 1}
+        name={skill && skill.name}
+        experience={skill.experience}
+      />
+    ));
+  }
+
+  renderListContent(skills = [], skillsFetchStatus) {
+    if (skillsFetchStatus === 'LOADED') {
+      if (skills.length > 0) {
+        return this.renderSkillItems();
+      }
+      return <p>Hey! please add one or more skills ;)</p>;
+    }
+
+    return <div>Something was wrong!</div>;
+  }
+
   render() {
+    const { skills, skillsFetchStatus } = this.props;
+
+    const isLoading = this.fetchStatus(skillsFetchStatus);
     return (
       <Container className="Main">
         <H1>ADD YOUR SKILLS</H1>
@@ -69,17 +109,21 @@ class Main extends Component {
           <Button>Add skills</Button>
         </StyledForm>
         <Panel>
-          <Skill index={1} name="Node.js" experience="<1 year" />
-          <Skill index={1} name="User experience design" experience="<1 year" />
-          <Skill index={1} name="Webpack JS" experience="<1 year" />
-          <Skill index={1} name="Webpack JS" experience="<1 year" />
-          <Skill index={1} name="Product management" experience="<1 year" />
-          <Skill index={1} name="Vue.js" experience="<1 year" />
-          <Skill index={1} name="Webpack JS" experience="<1 year" />
+          {isLoading ? (
+            <p>Loading...</p>
+          ) : (
+            this.renderListContent(skills, skillsFetchStatus)
+          )}
         </Panel>
       </Container>
     );
   }
 }
+
+Main.propTypes = {
+  fetchSkills: PropTypes.func.isRequired,
+  addSkill: PropTypes.func.isRequired,
+  removeSkill: PropTypes.func.isRequired
+};
 
 export default Main;

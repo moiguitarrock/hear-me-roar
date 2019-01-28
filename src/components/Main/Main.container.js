@@ -1,4 +1,3 @@
-import React from 'react';
 import { connect } from 'react-redux';
 
 import * as skillActions from '../../actions/skills';
@@ -6,9 +5,9 @@ import Main from './Main';
 
 export const mapStateToProps = state => {
   const { skills } = state;
-
   return {
-    skills
+    skills: skills.entities,
+    skillsFetchStatus: skills.skillsFetchStatus
   };
 };
 

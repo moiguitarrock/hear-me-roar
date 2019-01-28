@@ -4,18 +4,24 @@ import styled from 'styled-components';
 
 const SkillContainter = styled.div`
   & {
+    width: 100%;
+    position: relative;
+    display: flex;
+    border: 1px solid #f4f5f6;
+    border-radius: 3px;
+    transition: border 1s;
+    background: #fff;
+    margin: 0;
+
     @media (min-width: 768px) {
       min-width: 160px;
       width: auto;
     }
-    width: 100%;
-    position: relative;
-    display: flex;
-    border: 2px solid #f4f5f6;
-    border-radius: 3px;
-    transition: border 1s;
-    background: #fff;
-    margin: 0 5px 5px 0;
+
+    @media (min-width: 768px) {
+      margin: 0 5px 5px 0;
+      border: 2px solid #f4f5f6;
+    }
 
     > div:first-child {
       padding: 7px 5px;
@@ -24,6 +30,7 @@ const SkillContainter = styled.div`
       font-weight: bold;
       color: #fff;
       transition: background 0.5s;
+      border-radius: 3px 0 0 3px;
 
       &.first-skills {
         background: #26333c;
@@ -31,6 +38,7 @@ const SkillContainter = styled.div`
 
       + div {
         padding: 0 30px 0 12px;
+        border-radius: 0 3px 3px 0;
 
         h2 {
           color: #26333c;
@@ -46,17 +54,27 @@ const SkillContainter = styled.div`
 
     .close {
       position: absolute;
-      top: 4px;
-      right: 4px;
-      font-size: 14px;
       color: #707a7e;
       cursor: pointer;
       font-weight: bolder;
       display: none;
+      top: 28px;
+      right: 11px;
+      font-size: 16px;
+
+      @media (min-width: 768px) {
+        top: 4px;
+        right: 4px;
+        font-size: 14px;
+      }
     }
 
     &:hover {
-      border: 2px solid #e2e5e6;
+      border: 1px solid #e2e5e6;
+      @media (min-width: 768px) {
+        border: 2px solid #e2e5e6;
+      }
+
       > div:first-child {
         background-color: #19998e;
       }
@@ -67,9 +85,10 @@ const SkillContainter = styled.div`
   }
 `;
 
-const Skill = ({ index, name, experience, ...rest }) => {
+const Skill = ({ index, name, experience }) => {
+  console.log('wat', experience);
   return (
-    <SkillContainter className="skill-item" {...rest}>
+    <SkillContainter className="skill-item">
       <div className={index <= 5 ? 'first-skills' : ''}>{index}</div>
       <div>
         <h2>{name}</h2>
