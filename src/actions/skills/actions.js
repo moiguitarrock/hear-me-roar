@@ -19,24 +19,24 @@ export const fetchFailure = ({ error }) => {
   };
 };
 
-export const addRequest = id => {
+export const addRequest = () => {
   return {
     type: 'SKILLS_ADD_REQUEST',
-    payload: { id }
+    payload: {}
   };
 };
 
-export const addSuccess = ({ id, result, data }) => {
+export const addSuccess = ({ data }) => {
   return {
     type: 'SKILLS_ADD_SUCCESS',
-    payload: { result, data, id }
+    payload: { data }
   };
 };
 
-export const addFailure = ({ id, error }) => {
+export const addFailure = ({ error }) => {
   return {
     type: 'SKILLS_ADD_FAILURE',
-    payload: { id, error }
+    payload: { error }
   };
 };
 

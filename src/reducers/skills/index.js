@@ -5,6 +5,8 @@ export const entities = function(state = [], action) {
   switch (action.type) {
     case 'SKILLS_FETCH_SUCCESS':
       return [...state, ...data];
+    case 'SKILLS_ADD_SUCCESS':
+      return [...state, data];
     default:
       return state;
   }

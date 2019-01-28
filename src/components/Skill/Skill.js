@@ -86,7 +86,6 @@ const SkillContainter = styled.div`
 `;
 
 const Skill = ({ index, name, experience }) => {
-  console.log('wat', experience);
   return (
     <SkillContainter className="skill-item">
       <div className={index <= 5 ? 'first-skills' : ''}>{index}</div>

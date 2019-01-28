@@ -13,6 +13,10 @@ const H1 = styled.h1`
   color: #3c4042;
 `;
 
+const Error = styled.p`
+  color: red;
+`;
+
 const StyledForm = styled.form`
   & {
     display: flex;
@@ -53,6 +57,17 @@ const StyledForm = styled.form`
 class Main extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      mySkill: '',
+      myExperience: '',
+      inputError: '',
+      selectError: ''
+    };
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleSelectChange = this.handleSelectChange.bind(this);
   }
 
   componentWillMount() {
@@ -83,8 +98,42 @@ class Main extends Component {
       }
       return <p>Hey! please add one or more skills ;)</p>;
     }
-
     return <div>Something was wrong!</div>;
+  }
+
+  handleChange(e) {
+    this.setState({
+      mySkill: e.target.value,
+      inputError: ''
+    });
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+    const { mySkill, myExperience } = this.state;
+    if (mySkill.length < 4 || mySkill.length > 255) {
+      this.setState({
+        inputError:
+          mySkill.length < 4 || mySkill.length > 255
+            ? 'The skill must have more than 3 characters and less than 255'
+            : ''
+      });
+      return;
+    }
+
+    if (myExperience === '') {
+      this.setState({ selectError: 'Please select your experience' });
+      return;
+    }
+
+    this.setState({ inputError: '', selectError: '' });
+
+    this.props.addSkill({ name: mySkill, experience: myExperience });
+    this.setState({ mySkill: '', myExperience: '' });
+  }
+
+  handleSelectChange(e) {
+    this.setState({ myExperience: e.target.value });
   }
 
   render() {
@@ -95,19 +144,27 @@ class Main extends Component {
       <Container className="Main">
         <H1>ADD YOUR SKILLS</H1>
         <StyledForm>
-          <InputText placeholder="Node JS, Postgres, React, etc.," />
-          <Select>
-            <option value="" disabled selected>
-              Experience
-            </option>
-            <option>{'<1 year'}</option>
-            <option>1 - 3 years</option>
-            <option>3 - 5 years</option>
-            <option>5 - 7 years</option>
-            <option>7+ years</option>
+          <InputText
+            value={this.state.mySkill}
+            onChange={this.handleChange}
+            placeholder="Node JS, Postgres, React, etc.,"
+          />
+          <Select
+            value={this.state.myExperience}
+            onChange={this.handleSelectChange}
+          >
+            <option value="">Experience</option>
+            <option value="<1 year">{'<1 year'}</option>
+            <option value="1 - 3 years">1 - 3 years</option>
+            <option value="3 - 5 years">3 - 5 years</option>
+            <option value="5 - 7 years">5 - 7 years</option>
+            <option value="7+ years">7+ years</option>
           </Select>
-          <Button>Add skills</Button>
+          <Button type="submit" onClick={this.handleSubmit}>
+            Add skills
+          </Button>
         </StyledForm>
+        <Error>{this.state.inputError || this.state.selectError}</Error>
         <Panel>
           {isLoading ? (
             <p>Loading...</p>
