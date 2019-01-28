@@ -68,6 +68,7 @@ class Main extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleSelectChange = this.handleSelectChange.bind(this);
+    this.handleRemove = this.handleRemove.bind(this);
   }
 
   componentWillMount() {
@@ -84,9 +85,11 @@ class Main extends Component {
     return skills.map((skill, index) => (
       <Skill
         key={`skill-${skill && skill.id}`}
+        id={skill.id}
         index={index + 1}
         name={skill && skill.name}
         experience={skill.experience}
+        onHandleClick={this.handleRemove}
       />
     ));
   }
@@ -136,6 +139,10 @@ class Main extends Component {
     this.setState({ myExperience: e.target.value });
   }
 
+  handleRemove(id) {
+    this.props.removeSkill(id);
+  }
+
   render() {
     const { skills, skillsFetchStatus } = this.props;
 
@@ -178,6 +185,7 @@ class Main extends Component {
 }
 
 Main.propTypes = {
+  skills: PropTypes.array.isRequired,
   fetchSkills: PropTypes.func.isRequired,
   addSkill: PropTypes.func.isRequired,
   removeSkill: PropTypes.func.isRequired

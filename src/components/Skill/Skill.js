@@ -85,7 +85,7 @@ const SkillContainter = styled.div`
   }
 `;
 
-const Skill = ({ index, name, experience }) => {
+const Skill = ({ index, name, experience, id, onHandleClick }) => {
   return (
     <SkillContainter className="skill-item">
       <div className={index <= 5 ? 'first-skills' : ''}>{index}</div>
@@ -93,7 +93,9 @@ const Skill = ({ index, name, experience }) => {
         <h2>{name}</h2>
         <p>{experience}</p>
       </div>
-      <div className="close">X</div>
+      <div className="close" onClick={() => onHandleClick(id)}>
+        X
+      </div>
     </SkillContainter>
   );
 };
@@ -101,7 +103,8 @@ const Skill = ({ index, name, experience }) => {
 Skill.propTypes = {
   index: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
-  experience: PropTypes.string.isRequired
+  experience: PropTypes.string.isRequired,
+  onHandleClick: PropTypes.func.isRequired
 };
 
 export default Skill;

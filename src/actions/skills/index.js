@@ -28,4 +28,14 @@ export const add = data => {
   };
 };
 
-export const remove = id => {};
+export const remove = id => {
+  return async dispatch => {
+    try {
+      dispatch(actions.removeRequest());
+      await axios.delete(`${API_UR}/${id}`);
+      dispatch(actions.removeSuccess({ id }));
+    } catch (error) {
+      dispatch(actions.removeFailure({ id, error }));
+    }
+  };
+};

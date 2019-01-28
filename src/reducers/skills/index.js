@@ -7,6 +7,8 @@ export const entities = function(state = [], action) {
       return [...state, ...data];
     case 'SKILLS_ADD_SUCCESS':
       return [...state, data];
+    case 'SKILLS_REMOVE_SUCCESS':
+      return state.filter(item => item.id !== id);
     default:
       return state;
   }
