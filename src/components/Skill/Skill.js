@@ -4,6 +4,11 @@ import styled from 'styled-components';
 
 const SkillContainter = styled.div`
   & {
+    @media (min-width: 768px) {
+      min-width: 160px;
+      width: auto;
+    }
+    width: 100%;
     position: relative;
     display: flex;
     border: 2px solid #f4f5f6;
@@ -11,6 +16,7 @@ const SkillContainter = styled.div`
     transition: border 1s;
     background: #fff;
     margin: 0 5px 5px 0;
+
     > div:first-child {
       padding: 7px 5px;
       background: #80878a;
@@ -61,9 +67,9 @@ const SkillContainter = styled.div`
   }
 `;
 
-const Skill = ({ index, name, experience }) => {
+const Skill = ({ index, name, experience, ...rest }) => {
   return (
-    <SkillContainter className="skill-item">
+    <SkillContainter className="skill-item" {...rest}>
       <div className={index <= 5 ? 'first-skills' : ''}>{index}</div>
       <div>
         <h2>{name}</h2>
