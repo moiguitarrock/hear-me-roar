@@ -24,7 +24,7 @@ npm run build
 npm run api
 ```
 
-##How long did it take you to finish it?
+## How long did it take you to finish it?
 
 This project takes me 6 hours to complete them
 
