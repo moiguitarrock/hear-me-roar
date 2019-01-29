@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-const SkillContainter = styled.div`
+export const SkillContainter = styled.div`
   & {
     width: 100%;
     position: relative;
@@ -88,7 +88,7 @@ const SkillContainter = styled.div`
 const Skill = ({ index, name, experience, id, onHandleClick }) => {
   return (
     <SkillContainter className="skill-item">
-      <div className={index <= 5 ? 'first-skills' : ''}>{index}</div>
+      <div className={index <= 5 ? 'first-skills' : 'rest-skills'}>{index}</div>
       <div>
         <h2>{name}</h2>
         <p>{experience}</p>

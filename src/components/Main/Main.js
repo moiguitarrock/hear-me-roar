@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 import Button from '../Button';
@@ -7,52 +6,12 @@ import InputText from '../InputText';
 import Select from '../Select';
 import Skill from '../Skill';
 import Panel from '../Panel';
-import Container from './components/Container';
-
-const H1 = styled.h1`
-  color: #3c4042;
-`;
-
-const Error = styled.p`
-  color: red;
-`;
-
-const StyledForm = styled.form`
-  & {
-    display: flex;
-    flex-wrap: wrap;
-    input,
-    select,
-    button {
-      margin-right: 5px;
-    }
-
-    input {
-      flex: 1;
-      flex-basis: 100%;
-      margin-bottom: 15px;
-    }
-    select {
-      flex: 1;
-    }
-    button {
-      flex: 1;
-    }
-
-    @media (min-width: 768px) {
-      input {
-        flex: 2;
-        margin-bottom: 0;
-      }
-      select {
-        flex: 1;
-      }
-      button {
-        flex: 0.5;
-      }
-    }
-  }
-`;
+import {
+  Container,
+  StyledForm,
+  H1,
+  Error
+} from './components/StyledComponents';
 
 class Main extends Component {
   constructor(props) {
@@ -71,7 +30,7 @@ class Main extends Component {
     this.handleRemove = this.handleRemove.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     const { fetchSkills } = this.props;
     fetchSkills();
   }
@@ -81,27 +40,31 @@ class Main extends Component {
   }
 
   renderSkillItems() {
-    const { skills = [] } = this.props;
+    const { skills } = this.props;
     return skills.map((skill, index) => (
       <Skill
-        key={`skill-${skill && skill.id}`}
+        key={`skill-${skill.id}`}
         id={skill.id}
         index={index + 1}
         name={skill && skill.name}
-        experience={skill.experience}
+        experience={skill && skill.experience}
         onHandleClick={this.handleRemove}
       />
     ));
   }
 
-  renderListContent(skills = [], skillsFetchStatus) {
+  renderListContent(skills, skillsFetchStatus) {
     if (skillsFetchStatus === 'LOADED') {
       if (skills.length > 0) {
         return this.renderSkillItems();
       }
-      return <p>Hey! please add one or more skills ;)</p>;
+      return (
+        <p className="skills-blank-state">
+          Hey! please add one or more skills ;-)
+        </p>
+      );
     }
-    return <div>Something was wrong!</div>;
+    return <p className="skills-something-wrong">Something went wrong! :-(</p>;
   }
 
   handleChange(e) {
@@ -117,9 +80,7 @@ class Main extends Component {
     if (mySkill.length < 4 || mySkill.length > 255) {
       this.setState({
         inputError:
-          mySkill.length < 4 || mySkill.length > 255
-            ? 'The skill must have more than 3 characters and less than 255'
-            : ''
+          'The skill must have more than 3 characters and less than 255'
       });
       return;
     }
@@ -174,7 +135,7 @@ class Main extends Component {
         <Error>{this.state.inputError || this.state.selectError}</Error>
         <Panel>
           {isLoading ? (
-            <p>Loading...</p>
+            <p className="skills-container-loading">Loading...</p>
           ) : (
             this.renderListContent(skills, skillsFetchStatus)
           )}
@@ -183,6 +144,10 @@ class Main extends Component {
     );
   }
 }
+
+Main.defaultProps = {
+  skill: []
+};
 
 Main.propTypes = {
   skills: PropTypes.array.isRequired,
