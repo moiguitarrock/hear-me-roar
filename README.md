@@ -3,25 +3,26 @@
 - Run the project:
 
 ```
-npm start
+> npm i
+> npm start
 ```
 
 - Run tests:
 
 ```
-npm test
+> npm test
 ```
 
 - Generate an optimized build
 
 ```
-npm run build
+> npm run build
 ```
 
 - Run the fake API
 
 ```
-npm run api
+> npm run api
 ```
 
 ## How long did it take you to finish it?
